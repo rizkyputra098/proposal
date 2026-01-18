@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Selamat! Seminar Proposal Selesai Sayangku 💕</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols+2&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Caveat&display=swap");
+      @import url("https://fonts.cdnfonts.com/css/segoe-script");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        overscroll-behavior: none;
+        font-variant-ligatures: none;
+        text-rendering: optimizeLegibility;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body {
+        font-family: "Segoe Script", cursive;
+        overflow: hidden;
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      /* === SPLASH SCREEN === */
+      .splash {
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        z-index: 1000;
+        background: linear-gradient(
+          135deg,
+          #ffe4f0 0%,
+          #fff0f5 50%,
+          #ffe4f0 100%
+        );
+        transition: opacity 0.5s ease-out;
+      }
+
+      .splash.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .splash_logo {
+        position: absolute;
+        margin: -15px 0 0 -25px;
+        top: 50vh;
+        z-index: 5;
+        left: 50vw;
+        width: 50px;
+        text-align: center;
+        height: 30px;
+        font-size: clamp(22px, 5vw, 26px);
+        font-weight: 600;
+        color: #ffffff;
+        opacity: 1;
+        animation: logo 0.3s ease-in 1.5s forwards,
+          off 0.6s ease-in-out 3.2s forwards;
+      }
+
+      .splash_logo:before {
+        display: block;
+        position: absolute;
+        left: 15px;
+        bottom: -5px;
+        width: 20px;
+        height: 1px;
+        background-color: #f06292;
+        content: "";
+      }
+
+      .splash_logo:after {
+        display: block;
+        position: absolute;
+        left: 15px;
+        top: -5px;
+        width: 20px;
+        height: 1px;
+        background-color: #f06292;
+        content: "";
+      }
+
+      .splash_svg {
+        position: relative;
+        margin: auto;
+        width: 100%;
+        height: 100%;
+      }
+
+      .splash_svg svg {
+        width: 100%;
+        height: 100%;
+        backface-visibility: visible;
+      }
+
+      .splash_svg rect {
+        width: 100%;
+        height: 100%;
+        fill: #ff69b4;
+        stroke: 0;
+        clip-path: polygon(45vw 40vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
+        animation: expand 0.7s ease-in forwards 2.7s;
+      }
+
+      .splash_minimize {
+        position: absolute;
+        margin: auto;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 4;
+      }
+
+      .splash_minimize svg {
+        width: 100%;
+        height: 100%;
+        backface-visibility: visible;
+      }
+
+      .splash_minimize rect {
+        width: 100%;
+        height: 100%;
+        clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
+        animation: scale 0.2s ease-out forwards 1s,
+          hide 1.3s ease-out forwards 1.2s;
+      }
+
+      .text {
+        opacity: 0;
+        position: absolute;
+        z-index: 7;
+        text-align: center;
+        width: 90%;
+        max-width: 400px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #d81b60;
+        animation: on 0.6s ease-in-out 3.7s forwards;
+        padding: 0 20px;
+      }
+
+      .text p {
+        white-space: nowrap;
+        overflow: hidden;
+        width: 100%;
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
+        font-weight: 700;
+        margin: 0;
+        animation: type 0.3s steps(60, end) 3.7s;
+      }
+
+      .text p:nth-child(2) {
+        font-size: clamp(1.2rem, 4vw, 1.8rem);
+        margin-top: 0.5rem;
+        animation: type2 0.5s steps(60, end) 3.7s;
+      }
+
+      .text button {
+        border: 0;
+        opacity: 0;
+        background: transparent;
+        color: #d81b60;
+        border: 2px solid #d81b60;
+        letter-spacing: 2px;
+        padding: clamp(0.6rem, 2vw, 0.8rem) clamp(1.5rem, 4vw, 2.5rem);
+        font-size: clamp(12px, 2.5vw, 14px);
+        font-weight: 600;
+        text-transform: uppercase;
+        cursor: pointer;
+        margin-top: 1.5rem;
+        border-radius: 25px;
+        font-family: "Segoe Script", cursive;
+        transition: all 0.3s ease;
+        animation: on 0.6s ease-in-out 4s forwards;
+      }
+
+      .text button:hover {
+        background: #ff69b4;
+        color: white;
+        border-color: #ff69b4;
+        transform: scale(1.05);
+      }
+
+      /* === CARD PAGE === */
+      #cardPage {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.8s ease-in;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #cardPage.show {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      #background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background: linear-gradient(
+          135deg,
+          #ffe4f0 0%,
+          #fff0f5 50%,
+          #ffe4f0 100%
+        );
+        user-select: none;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      #background > div {
+        --size: 5vw;
+        --symbol: "✽";
+        --pos_x: 0vw;
+        --duration_move: 7s;
+        --delay_move: 0s;
+        --duration_rotate: 1.5s;
+        --delay_rotate: 0s;
+        --duration_clip: 10s;
+        --delay_clip: 0s;
+        --hue: 0deg;
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: clamp(15px, var(--size), 80px);
+        font-family: "Noto Sans Symbols 2", sans-serif;
+        transform-origin: center top;
+        animation: move var(--duration_move) var(--delay_move) linear infinite
+          normal both;
+      }
+
+      #background span {
+        display: block;
+        position: relative;
+        transform-origin: center;
+        transform: rotate(0deg);
+        animation: rotate var(--duration_rotate) var(--delay_rotate) ease-in-out
+          infinite alternate both;
+      }
+
+      #background span:after {
+        content: var(--symbol);
+        -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.2);
+        text-stroke: 0.5px rgba(0, 0, 0, 0.2);
+        line-height: 1.2;
+        position: relative;
+        display: block;
+        color: transparent;
+        background-clip: text;
+        filter: brightness(1.2) hue-rotate(var(--hue));
+        background-image: url(https://images.unsplash.com/photo-1605707157753-c723b9d5af4a?&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2OTUxNDQ3MzB8&ixlib=rb-4.0.3&w=800&q=80&dpr=2);
+        background-position: center;
+        background-size: 200px auto;
+        background-repeat: repeat;
+        transform: translateZ(0);
+        animation: bg1 var(--duration_clip) var(--delay_clip) linear infinite
+          alternate both;
+      }
+
+      #background > div:nth-child(even) span:after {
+        animation-name: bg2;
+      }
+
+      /* Symbol patterns */
+      #background > div:nth-child(23n + 1) {
+        --symbol: "🌸";
+      }
+      #background > div:nth-child(23n + 2) {
+        --symbol: "✦";
+      }
+      #background > div:nth-child(23n + 3) {
+        --symbol: "💐";
+      }
+      #background > div:nth-child(23n + 4) {
+        --symbol: "✧";
+      }
+      #background > div:nth-child(23n + 5) {
+        --symbol: "🌹";
+      }
+      #background > div:nth-child(23n + 6) {
+        --symbol: "✻";
+      }
+      #background > div:nth-child(23n + 7) {
+        --symbol: "🌺";
+      }
+      #background > div:nth-child(23n + 8) {
+        --symbol: "✶";
+      }
+      #background > div:nth-child(23n + 9) {
+        --symbol: "💕";
+      }
+      #background > div:nth-child(23n + 10) {
+        --symbol: "❋";
+      }
+      #background > div:nth-child(23n + 11) {
+        --symbol: "🌼";
+      }
+      #background > div:nth-child(23n + 12) {
+        --symbol: "✳";
+      }
+      #background > div:nth-child(23n + 13) {
+        --symbol: "🎀";
+      }
+      #background > div:nth-child(23n + 14) {
+        --symbol: "✨";
+      }
+      #background > div:nth-child(23n + 15) {
+        --symbol: "🌸";
+      }
+      #background > div:nth-child(23n + 16) {
+        --symbol: "✷";
+      }
+      #background > div:nth-child(23n + 17) {
+        --symbol: "💗";
+      }
+      #background > div:nth-child(23n + 18) {
+        --symbol: "✴";
+      }
+      #background > div:nth-child(23n + 19) {
+        --symbol: "🌻";
+      }
+      #background > div:nth-child(23n + 20) {
+        --symbol: "❊";
+      }
+      #background > div:nth-child(23n + 21) {
+        --symbol: "🎁";
+      }
+      #background > div:nth-child(23n + 22) {
+        --symbol: "✹";
+      }
+
+      #background > div:nth-child(21n + 1) {
+        --pos_x: 5vw;
+      }
+      #background > div:nth-child(21n + 2) {
+        --pos_x: 10vw;
+      }
+      #background > div:nth-child(21n + 3) {
+        --pos_x: 15vw;
+      }
+      #background > div:nth-child(21n + 4) {
+        --pos_x: 20vw;
+      }
+      #background > div:nth-child(21n + 5) {
+        --pos_x: 25vw;
+      }
+      #background > div:nth-child(21n + 6) {
+        --pos_x: 30vw;
+      }
+      #background > div:nth-child(21n + 7) {
+        --pos_x: 35vw;
+      }
+      #background > div:nth-child(21n + 8) {
+        --pos_x: 40vw;
+      }
+      #background > div:nth-child(21n + 9) {
+        --pos_x: 45vw;
+      }
+      #background > div:nth-child(21n + 10) {
+        --pos_x: 50vw;
+      }
+      #background > div:nth-child(21n + 11) {
+        --pos_x: 55vw;
+      }
+      #background > div:nth-child(21n + 12) {
+        --pos_x: 60vw;
+      }
+      #background > div:nth-child(21n + 13) {
+        --pos_x: 65vw;
+      }
+      #background > div:nth-child(21n + 14) {
+        --pos_x: 70vw;
+      }
+      #background > div:nth-child(21n + 15) {
+        --pos_x: 75vw;
+      }
+      #background > div:nth-child(21n + 16) {
+        --pos_x: 80vw;
+      }
+      #background > div:nth-child(21n + 17) {
+        --pos_x: 85vw;
+      }
+      #background > div:nth-child(21n + 18) {
+        --pos_x: 90vw;
+      }
+      #background > div:nth-child(21n + 19) {
+        --pos_x: 95vw;
+      }
+      #background > div:nth-child(21n + 20) {
+        --pos_x: 100vw;
+      }
+
+      #background > div:nth-child(12n + 1) {
+        --hue: 30deg;
+      }
+      #background > div:nth-child(12n + 2) {
+        --hue: 270deg;
+      }
+      #background > div:nth-child(12n + 3) {
+        --hue: 90deg;
+      }
+      #background > div:nth-child(12n + 4) {
+        --hue: 150deg;
+      }
+      #background > div:nth-child(12n + 5) {
+        --hue: 330deg;
+      }
+      #background > div:nth-child(12n + 6) {
+        --hue: 180deg;
+      }
+      #background > div:nth-child(12n + 7) {
+        --hue: 60deg;
+      }
+      #background > div:nth-child(12n + 8) {
+        --hue: 210deg;
+      }
+      #background > div:nth-child(12n + 9) {
+        --hue: 120deg;
+      }
+      #background > div:nth-child(12n + 10) {
+        --hue: 240deg;
+      }
+      #background > div:nth-child(12n + 11) {
+        --hue: 300deg;
+      }
+
+      #background > div:nth-child(8n + 1) {
+        --delay_move: -4s;
+      }
+      #background > div:nth-child(8n + 2) {
+        --delay_move: -5s;
+      }
+      #background > div:nth-child(8n + 3) {
+        --delay_move: -6s;
+      }
+      #background > div:nth-child(8n + 4) {
+        --delay_move: -1s;
+      }
+      #background > div:nth-child(8n + 5) {
+        --delay_move: -2s;
+      }
+      #background > div:nth-child(8n + 6) {
+        --delay_move: -3s;
+      }
+      #background > div:nth-child(8n + 7) {
+        --delay_move: -7s;
+      }
+
+      #background > div:nth-child(9n + 1) {
+        --duration_move: 7.5s;
+      }
+      #background > div:nth-child(9n + 2) {
+        --duration_move: 8s;
+      }
+      #background > div:nth-child(9n + 3) {
+        --duration_move: 8.5s;
+      }
+      #background > div:nth-child(9n + 4) {
+        --duration_move: 9s;
+      }
+      #background > div:nth-child(9n + 5) {
+        --duration_move: 5.5s;
+      }
+      #background > div:nth-child(9n + 6) {
+        --duration_move: 6s;
+      }
+      #background > div:nth-child(9n + 7) {
+        --duration_move: 6.5s;
+      }
+      #background > div:nth-child(9n + 8) {
+        --duration_move: 7.8s;
+      }
+
+      #background > div:nth-child(7n + 1) {
+        --delay_rotate: 0.3s;
+      }
+      #background > div:nth-child(7n + 2) {
+        --delay_rotate: 0.6s;
+      }
+      #background > div:nth-child(7n + 3) {
+        --delay_rotate: 0.9s;
+      }
+      #background > div:nth-child(7n + 4) {
+        --delay_rotate: -0.3s;
+      }
+      #background > div:nth-child(7n + 5) {
+        --delay_rotate: -0.6s;
+      }
+      #background > div:nth-child(7n + 6) {
+        --delay_rotate: -0.9s;
+      }
+
+      #background > div:nth-child(6n + 1) {
+        --duration_rotate: 1s;
+      }
+      #background > div:nth-child(6n + 2) {
+        --duration_rotate: 1.6s;
+      }
+      #background > div:nth-child(6n + 3) {
+        --duration_rotate: 1.1s;
+      }
+      #background > div:nth-child(6n + 4) {
+        --duration_rotate: 1.2s;
+      }
+      #background > div:nth-child(6n + 5) {
+        --duration_rotate: 1.3s;
+      }
+
+      #background > div:nth-child(5n + 1) {
+        --size: 3vw;
+      }
+      #background > div:nth-child(5n + 2) {
+        --size: 4vw;
+      }
+      #background > div:nth-child(5n + 3) {
+        --size: 6vw;
+      }
+      #background > div:nth-child(5n + 4) {
+        --size: 7vw;
+      }
+
+      .container {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        width: 100%;
+        padding: 20px;
+      }
+
+      .card {
+        position: relative;
+        max-width: 350px;
+        width: 100%;
+        min-height: 450px;
+        background: repeating-linear-gradient(
+          transparent 0 calc(1.2rem - 1px),
+          #f8d7e4 0 1.2rem
+        );
+        background-color: #fce4ec;
+        border-radius: 15px;
+        box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.3) inset,
+          0 15px 40px 0 rgba(255, 105, 180, 0.2);
+        font-family: "Caveat", serif;
+        transform: scale(0.9);
+        animation: cardEnter 0.8s ease-out forwards;
+      }
+
+      .card__content {
+        padding: clamp(1.2rem, 3vw, 1.8rem) clamp(1.5rem, 4vw, 2rem) 0
+          clamp(1.2rem, 3vw, 1.5rem);
+        font-size: clamp(0.85rem, 2.2vw, 1rem);
+        line-height: clamp(1.3rem, 3vw, 1.5rem);
+        color: #d81b60;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+      }
+
+      .card__content p {
+        margin: 0 0 clamp(0.8rem, 2vw, 1rem) 0;
+      }
+
+      .card__content p:first-child {
+        font-size: clamp(1.1rem, 3vw, 1.3rem);
+        margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
+        font-weight: 600;
+      }
+
+      .heart {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        clip-path: path(
+          "M12 20a1 1 0 0 1-.437-.1C11.214 19.73 3 15.671 3 9a5 5 0 0 1 8.535-3.536l.465.465.465-.465A5 5 0 0 1 21 9c0 6.646-8.212 10.728-8.562 10.9A1 1 0 0 1 12 20z"
+        );
+        background: #a00;
+        transform: scale(0);
+        animation: 30s pop 0.5s linear forwards;
+      }
+
+      .heart:after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: var(--bg-color);
+        transition: background 0.2s;
+      }
+
+      .heart--with-dots:after {
+        transform: translate(-50%, -50%) rotate(36deg);
+        background-image: radial-gradient(#efefef 20%, transparent 25%);
+        background-position: 0 0, 2px 2px;
+        background-size: 4px 4px;
+      }
+
+      .heart--with-lines:after {
+        background-image: repeating-linear-gradient(
+          35deg,
+          rgba(255, 255, 255, 0.25),
+          rgba(255, 255, 255, 0.25) 2px,
+          transparent 2px,
+          transparent 4px
+        );
+      }
+
+      .heart--is-pink:after {
+        --bg-color: #ff69b4;
+      }
+      .heart--is-red:after {
+        --bg-color: #e91e63;
+      }
+      .heart--is-purple:after {
+        --bg-color: #c2185b;
+      }
+      .heart--is-rose:after {
+        --bg-color: #f06292;
+      }
+      .heart--is-coral:after {
+        --bg-color: #ff7043;
+      }
+
+      .heart--top-left {
+        left: -15%;
+        top: 5%;
+        rotate: -7deg;
+        z-index: 2;
+        --scale: 4.6;
+        animation-delay: 0.1s;
+      }
+      .heart--top-center {
+        left: 65%;
+        top: -2%;
+        rotate: -42deg;
+        z-index: -1;
+        --scale: 4.6;
+        animation-delay: 0.2s;
+      }
+      .heart--top-right {
+        left: 115%;
+        top: 12%;
+        rotate: 10deg;
+        z-index: -1;
+        --scale: 3.6;
+        animation-delay: 0.3s;
+      }
+      .heart--left-center {
+        left: -12%;
+        top: 68%;
+        rotate: -23deg;
+        z-index: 2;
+        --scale: 5.2;
+        animation-delay: 0.2s;
+      }
+      .heart--bottom-center {
+        --scale: 4.2;
+        left: 40%;
+        top: 105%;
+        rotate: 40deg;
+        animation-delay: 0.3s;
+      }
+      .heart--bottom-right {
+        left: 105%;
+        top: 82%;
+        rotate: 12deg;
+        z-index: -1;
+        --scale: 5.4;
+        animation-delay: 0.4s;
+      }
+
+      fieldset {
+        --gap: clamp(6px, 1.5vw, 8px);
+        position: absolute;
+        top: clamp(15px, 3vw, 20px);
+        right: clamp(8px, 2vw, 10px);
+        border: none;
+        margin: 0;
+        padding: 0;
+        width: clamp(35px, 8vw, 40px);
+        z-index: 20;
+      }
+
+      fieldset legend {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0;
+      }
+
+      fieldset input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: 0;
+      }
+
+      fieldset label {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: clamp(25px, 6vw, 30px);
+        background: var(--bg-color);
+        margin: var(--gap) 0;
+        border-radius: 3px;
+        font-size: 0;
+        box-shadow: -2px 1px 3px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        transform: translate(0, 0) scaleX(1);
+        transform-origin: left center;
+        filter: brightness(90%);
+        transition: transform 0.2s cubic-bezier(1, 1, 0.5, 1.3333), filter 0.2s;
+      }
+
+      fieldset label:hover {
+        transform: translate(0, 0) scaleX(1.25);
+      }
+
+      fieldset label:after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 0;
+        height: 0;
+        border-top: 5px solid var(--bg-color);
+        border-right: 5px solid transparent;
+        border-left: 0 solid transparent;
+        border-bottom: 5px solid transparent;
+        filter: brightness(62%);
+        transition: border-right 0.2s, filter 0.2s;
+      }
+
+      fieldset label:hover:after {
+        border-right: clamp(10px, 2.5vw, 12px) solid transparent;
+      }
+
+      fieldset input:checked + label,
+      fieldset input:focus + label {
+        transform: translate(0, 0) scaleX(1.25);
+        filter: brightness(100%);
+      }
+
+      fieldset input:checked + label:after,
+      fieldset input:focus + label:after {
+        border-right: clamp(10px, 2.5vw, 12px) solid transparent;
+        filter: brightness(50%);
+      }
+
+      fieldset label:nth-of-type(1) {
+        --bg-color: #ff69b4;
+      }
+      fieldset label:nth-of-type(2) {
+        --bg-color: #e91e63;
+      }
+      fieldset label:nth-of-type(3) {
+        --bg-color: #c2185b;
+      }
+      fieldset label:nth-of-type(4) {
+        --bg-color: #f06292;
+      }
+      fieldset label:nth-of-type(5) {
+        --bg-color: #ff7043;
+      }
+
+      body:has(#pink:checked) .heart:after {
+        --bg-color: #ff69b4;
+      }
+      body:has(#red:checked) .heart:after {
+        --bg-color: #e91e63;
+      }
+      body:has(#darkred:checked) .heart:after {
+        --bg-color: #c2185b;
+      }
+      body:has(#lightpink:checked) .heart:after {
+        --bg-color: #f06292;
+      }
+      body:has(#coral:checked) .heart:after {
+        --bg-color: #ff7043;
+      }
+
+      /* Keyframes */
+      @keyframes scale {
+        100% {
+          clip-path: polygon(45vw 40vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
+        }
+      }
+
+      @keyframes hide {
+        100% {
+          fill: transparent;
+        }
+      }
+
+      @keyframes off {
+        100% {
+          opacity: 0;
+        }
+      }
+
+      @keyframes on {
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes logo {
+        100% {
+          color: #c2185b;
+        }
+      }
+
+      @keyframes type {
+        0% {
+          width: 0;
+        }
+      }
+
+      @keyframes type2 {
+        0% {
+          width: 0;
+        }
+        50% {
+          width: 0;
+        }
+        100% {
+          width: 100%;
+        }
+      }
+
+      @keyframes expand {
+        0% {
+        }
+        25% {
+          clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
+          fill: white;
+        }
+        50% {
+          clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
+          fill: #ff69b4;
+        }
+        75% {
+          clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
+          fill: white;
+        }
+        100% {
+          clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
+          fill: #ff69b4;
+        }
+      }
+
+      @keyframes cardEnter {
+        from {
+          opacity: 0;
+          transform: scale(0.8) translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      @keyframes bg1 {
+        0% {
+          background-position: 0% 0%;
+        }
+        100% {
+          background-position: 100% 100%;
+        }
+      }
+
+      @keyframes bg2 {
+        0% {
+          background-position: 100% 0%;
+        }
+        100% {
+          background-position: 0% 100%;
+        }
+      }
+
+      @keyframes rotate {
+        0% {
+          transform: rotate(115deg);
+        }
+        100% {
+          transform: rotate(245deg);
+        }
+      }
+
+      @keyframes move {
+        0% {
+          transform: translate3d(var(--pos_x), calc(0vh - var(--size)), 0);
+        }
+        100% {
+          transform: translate3d(var(--pos_x), 100vh, 0);
+        }
+      }
+
+      @keyframes pop {
+        0% {
+          transform: scale(0);
+        }
+        1% {
+          transform: scale(var(--scale));
+        }
+        2%,
+        34%,
+        64%,
+        100% {
+          transform: scale(var(--scale)) translate(0, 0);
+        }
+        10%,
+        42%,
+        72% {
+          transform: scale(var(--scale)) translate(-1px, -1px);
+        }
+        18%,
+        50%,
+        80% {
+          transform: scale(var(--scale)) translate(-1px, 2px);
+        }
+        26%,
+        58%,
+        88% {
+          transform: scale(var(--scale)) translate(1px, 1px);
+        }
+      }
+
+      /* === RESPONSIVE BREAKPOINTS === */
+
+      /* Small phones */
+      @media (max-width: 380px) {
+        .card {
+          max-width: 280px;
+          min-height: 420px;
+        }
+
+        .card__content {
+          font-size: 0.8rem;
+          line-height: 1.25rem;
+        }
+
+        .heart--top-left,
+        .heart--top-right,
+        .heart--bottom-right {
+          display: none;
+        }
+
+        fieldset {
+          width: 32px;
+          top: 12px;
+          right: 6px;
+        }
+      }
+
+      /* Tablets and medium devices */
+      @media (min-width: 768px) and (max-width: 1024px) {
+        .card {
+          max-width: 380px;
+          min-height: 480px;
+        }
+
+        .card__content {
+          font-size: 1.05rem;
+          line-height: 1.6rem;
+        }
+      }
+
+      /* Large screens */
+      @media (min-width: 1025px) {
+        .card {
+          max-width: 400px;
+          min-height: 500px;
+        }
+
+        .card__content {
+          font-size: 1.1rem;
+          line-height: 1.65rem;
+          padding: 2rem 2.2rem 0 1.8rem;
+        }
+
+        .heart--top-left {
+          --scale: 5.2;
+        }
+        .heart--top-center {
+          --scale: 5.2;
+        }
+        .heart--left-center {
+          --scale: 5.8;
+        }
+        .heart--bottom-right {
+          --scale: 6;
+        }
+      }
+
+      /* Landscape orientation on mobile */
+      @media (max-height: 600px) and (orientation: landscape) {
+        .container {
+          padding: 10px;
+        }
+
+        .card {
+          max-width: 320px;
+          min-height: auto;
+          height: 90vh;
+          overflow-y: auto;
+        }
+
+        .card__content {
+          font-size: 0.75rem;
+          line-height: 1.15rem;
+          padding: 1rem 1.2rem 0 1rem;
+        }
+
+        .card__content p {
+          margin-bottom: 0.6rem;
+        }
+
+        .heart {
+          display: none;
+        }
+
+        fieldset {
+          top: 8px;
+          right: 8px;
+          width: 30px;
+        }
+
+        fieldset label {
+          height: 20px;
+          margin: 4px 0;
+        }
+      }
+
+      /* Very small devices */
+      @media (max-width: 320px) {
+        .text p {
+          font-size: 1.3rem;
+        }
+
+        .text p:nth-child(2) {
+          font-size: 1.1rem;
+        }
+
+        .text button {
+          font-size: 11px;
+          padding: 0.5rem 1.2rem;
+        }
+
+        .card {
+          max-width: 260px;
+          min-height: 400px;
+        }
+
+        .card__content {
+          padding: 1rem 1.2rem 0 1rem;
+          font-size: 0.75rem;
+          line-height: 1.2rem;
+        }
+
+        .card__content p:first-child {
+          font-size: 1rem;
+          margin-bottom: 0.8rem;
+        }
+      }
+
+      /* High resolution displays */
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        body {
+          -webkit-font-smoothing: subpixel-antialiased;
+        }
+      }
+
+      /* Reduce motion for accessibility */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- SPLASH SCREEN -->
+    <div class="splash" id="splashScreen">
+      <div class="splash_logo">💕</div>
+      <div class="splash_svg">
+        <svg width="100%" height="100%">
+          <rect width="100%" height="100%"></rect>
+        </svg>
+      </div>
+      <div class="splash_minimize">
+        <svg width="100%" height="100%">
+          <rect width="100%" height="100%"></rect>
+        </svg>
+      </div>
+
+      <div class="text">
+        <p>Selamat sayangku❤️</p>
+        <p>Kamu Hebat</p>
+        <button id="viewCard">Lihat Kartu</button>
+      </div>
+    </div>
+
+    <!-- CARD PAGE -->
+    <div id="cardPage">
+      <div id="background">
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+        <div><span></span></div>
+      </div>
+
+      <div class="container">
+        <div class="card">
+          <div class="card__content">
+            <p>Selamat Yaa! 💕</p>
+            <p>
+              Akhirnya kamu berhasil<br />
+              menyelesaikan seminar proposal<br />
+              Setiap langkahmu, setiap malam begadang,<br />
+              setiap keraguan yang kamu lalui—<br />
+              semua terbayar indah hari ini
+            </p>
+            <p>
+              Kamu luar biasa, sayang<br />
+              Aku sangat bangga padamu<br />
+              Lebih dari yang bisa kata-kata ungkapkan<br />
+              Teruslah melangkah dengan percaya diri,<br />
+              karena aku akan selalu di sini<br />
+              mendukungmu di setiap tahap perjalananmu
+            </p>
+            <p style="text-align: center; margin-top: 20px; font-style: italic">
+              I love you sayangku❤️<br />
+              I'm so proud of you
+            </p>
+          </div>
+
+          <fieldset class="card__color-picker">
+            <legend>Pilih warna hati:</legend>
+            <input type="radio" id="pink" name="color" value="pink" checked />
+            <label for="pink">Pink</label>
+            <input type="radio" id="red" name="color" value="red" />
+            <label for="red">Merah</label>
+            <input type="radio" id="darkred" name="color" value="darkred" />
+            <label for="darkred">Marun</label>
+            <input type="radio" id="lightpink" name="color" value="lightpink" />
+            <label for="lightpink">Rose</label>
+            <input type="radio" id="coral" name="color" value="coral" />
+            <label for="coral">Coral</label>
+          </fieldset>
+
+          <div class="hearts">
+            <div class="heart heart--is-pink heart--top-left"></div>
+            <div
+              class="heart heart--with-dots heart--is-red heart--top-center"
+            ></div>
+            <div
+              class="heart heart--with-dots heart--is-coral heart--left-center"
+            ></div>
+            <div class="heart heart--is-rose heart--bottom-center"></div>
+            <div class="heart heart--is-purple heart--bottom-right"></div>
+            <div
+              class="heart heart--is-rose heart--with-lines heart--top-right"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("viewCard")
+        .addEventListener("click", function () {
+          document.getElementById("splashScreen").classList.add("hidden");
+          setTimeout(() => {
+            document.getElementById("cardPage").classList.add("show");
+          }, 500);
+        });
+    </script>
+  </body>
+</html>
